@@ -1,0 +1,15 @@
+###
+# .gitignore
+###
+
+
+# build files
+*.o
+hypervisor
+*.bin
+uImage
+*.d
+TAGS
+
+# backup files
+*~
