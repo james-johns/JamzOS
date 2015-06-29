@@ -16,8 +16,8 @@ AS:=$(CROSS_COMPILE)as
 CC:=$(CROSS_COMPILE)gcc
 LD:=$(CROSS_COMPILE)ld
 
-ASFLAGS+=-c -I./include -I./arch/$(ARCH)/include -D__ASSEMBLY__ -mcpu=cortex-a7 $(DEBUG)
-CFLAGS+=-ffreestanding -Wall -Wextra -Werror -nostdlib -nostartfiles -mcpu=cortex-a7 -g \
+ASFLAGS+=-c -I./include -I./arch/$(ARCH)/include -D__ASSEMBLY__ -mcpu=cortex-a7 -marm $(DEBUG)
+CFLAGS+=-ffreestanding -Wall -Wextra -Werror -nostdlib -nostartfiles -mcpu=cortex-a15 -marm \
 	-I./include -I./arch/$(ARCH)/include $(DEBUG)
 
 Q:=@-
