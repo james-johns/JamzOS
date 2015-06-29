@@ -6,7 +6,7 @@
 #include <config.h>
 #include <memory.h>
 #include <malloc.h>
-#include <printh.h>
+#include <printk.h>
 #include <pageTable.h>
 
 #define NULL ((void *)0)

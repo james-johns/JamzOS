@@ -6,7 +6,7 @@
 #include <pageTable.h>
 #include <memory.h>
 #include <malloc.h>
-#include <printh.h>
+#include <printk.h>
 
 #define NULL ((void *)0)
 
@@ -21,7 +21,7 @@ void printPageTable(struct pageTable_s *table, unsigned int baseAddr, unsigned i
 
 		if (!(desc.type & 0x1))
 			continue;
-		printh("%s mapping %d to %d (level %d)\r\n", ((desc.type & 0x2 && level < 3) ? "table" : "   page"),
+		printk("%s mapping %d to %d (level %d)\r\n", ((desc.type & 0x2 && level < 3) ? "table" : "   page"),
 			baseAddr + (i * ((level == 1) ? 0x40000000 : ((level == 2) ? 0x00100000 : 0x00001000))),
 			((desc.highAddr << 21) | desc.lowAddr << 12), level);
 		if (desc.type & 0x2 && level < 3) {

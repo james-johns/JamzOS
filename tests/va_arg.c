@@ -2,14 +2,14 @@
 
 #include <config.h>
 #include <va_arg.h>
-#include <printh.h>
+#include <printk.h>
 
 void va_arg_test(const char *fmt, ...)
 {
 	int fails = 0;
         va_list arg;
         va_list tmp;
-	printh("Test: va_arg_test ");
+	printk("Test: va_arg_test ");
         va_start(arg, fmt);
 
         tmp = arg;
@@ -39,6 +39,6 @@ void va_arg_test(const char *fmt, ...)
 
 void test_va_arg() 
 {
-	printh("test_va_arg\r\n");
+	printk("test_va_arg\r\n");
 	va_arg_test("test format %d %d\r\n", 0x0a0a0a0a, 0xa0a0a0a0);
 }

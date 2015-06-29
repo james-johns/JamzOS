@@ -5,7 +5,7 @@
  */
 #include <config.h>
 #include <tests.h>
-#include <printh.h>
+#include <printk.h>
 #include <gic.h>
 #include <memory.h>
 #include <schedule.h>
@@ -25,7 +25,7 @@ void _kmain()
 {
 	_end = (unsigned int) &_end;
 	malloc(0x10);
-	printh("Starting svc main\r\n");
+	printk("Starting svc main\r\n");
 
 	init_irqs();
 	init_scheduler();
@@ -37,7 +37,7 @@ void _kmain()
 	enableIRQS();
 
 
-	printh("\r\nHalting!");
+	printk("\r\nHalting!");
 	while (1) {
 		//    asm volatile("wfe"::);
 	}

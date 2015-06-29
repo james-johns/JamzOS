@@ -5,7 +5,7 @@
 
 #include <config.h>
 #include <gic.h>
-#include <printh.h>
+#include <printk.h>
 #include <schedule.h>
 #include <irq.h>
 
@@ -58,8 +58,8 @@ void init_timer()
  */
 void print_timer_value()
 {
-	printh("\r\nTimer value: %d     Status: %d", TIMER2_CUR_INTRVL, TIMER_IRQ_STATUS);
-	printh("\r\nTimer IRQ en:", TIMER_IRQ_EN);
+	printk("\r\nTimer value: %d     Status: %d", TIMER2_CUR_INTRVL, TIMER_IRQ_STATUS);
+	printk("\r\nTimer IRQ en:", TIMER_IRQ_EN);
 }
 
 /**
@@ -73,7 +73,7 @@ void timer_interrupt(struct cpuRegs_s *regs)
 	TIMER_IRQ_STATUS |= 0x04;
 	TIMER_IRQ_EN = 0x04;
 	TIMER2_CTRL |= 0x01;
-//	printh("Tick %d\r\n", count);
+//	printk("Tick %d\r\n", count);
 
 	if (count > 5) {
 		schedule(regs);

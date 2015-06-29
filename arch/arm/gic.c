@@ -5,7 +5,7 @@
 
 #include <config.h>
 #include <gic.h>
-#include <printh.h>
+#include <printk.h>
 #include <irq.h>
 
 /**
@@ -52,7 +52,7 @@ void init_gic_distributor()
 	  GICD[GICD_IGROUPR(i / 32)] = 0x0;
 	}
 
-	GICD[GICD_CTLR] = 0x01;
+	GICD[GICD_CTLR] = 0x0;
 }
 
 /**

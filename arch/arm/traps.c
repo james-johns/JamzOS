@@ -4,7 +4,7 @@
  */
 
 #include <config.h>
-#include <printh.h>
+#include <printk.h>
 #include <gic.h>
 #include <vgic.h>
 #include <vtimer.h>
@@ -13,6 +13,7 @@
 #include <irq.h>
 
 void timer_interrupt();
+extern void install_svc_vectors();
 
 /**
  * \fn init_irqs
@@ -21,6 +22,10 @@ void timer_interrupt();
  */
 void init_irqs()
 {
+  disableIRQS();
+        printk("Installing...");
+        install_svc_vectors();
+	printk("Installed SVC Vectors");
 	init_gic();
 }
 
@@ -81,7 +86,7 @@ void print_regs(struct cpuRegs_s *regs)
  */
 void handle_trap_undefined_instruction(struct cpuRegs_s *regs)
 {
-	printh("\r\nUndefine Instruction Trap");
+	printk("\r\nUndefine Instruction Trap");
 	print_regs(regs);
 	while(1);
 }
@@ -93,7 +98,7 @@ void handle_trap_undefined_instruction(struct cpuRegs_s *regs)
  */
 void handle_trap_supervisor_call(struct cpuRegs_s *regs)
 {
-	printh("\r\nSupervisor Call Trap");
+	printk("\r\nSupervisor Call Trap");
 	print_regs(regs);
 	while(1);
 }
@@ -105,7 +110,7 @@ void handle_trap_supervisor_call(struct cpuRegs_s *regs)
  */
 void handle_trap_prefetch_abort(struct cpuRegs_s *regs)
 {
-	printh("\r\nPrefetch Abort Trap");
+	printk("\r\nPrefetch Abort Trap");
 	print_regs(regs);
 	while(1);
 }
@@ -117,7 +122,7 @@ void handle_trap_prefetch_abort(struct cpuRegs_s *regs)
  */
 void handle_trap_data_abort(struct cpuRegs_s *regs)
 {
-	printh("\r\nData Abort Trap");
+	printk("\r\nData Abort Trap");
 	print_regs(regs);
 	while(1);
 }
@@ -144,7 +149,7 @@ void handle_trap_irq(struct cpuRegs_s *regs)
  */
 void handle_trap_fiq(struct cpuRegs_s *regs)
 {
-	printh("\r\nFIQ Trap");
+	printk("\r\nFIQ Trap");
 	print_regs(regs);
 	while(1);
 }

@@ -1,7 +1,7 @@
 
 .arm
 #include <asm/assembler.h>
-#include <printh.h>
+#include <printk.h>
 
 .extern _kmain
 /* easy use print macro. requires usable stack,

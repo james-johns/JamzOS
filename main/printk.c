@@ -6,17 +6,17 @@
  */
 
 #include <va_arg.h>
-#include <printh.h>
+#include <printk.h>
 
 /**
- * \fn printh_format(const char c, va_list *args)
+ * \fn printk_format(const char c, va_list *args)
  * \param[in] c Format code character
  * \param[in] args Variable arguments list
- * \brief Convenience method for printh
+ * \brief Convenience method for printk
  *
- * Used by printh to acheive formatted output.
+ * Used by printk to acheive formatted output.
  */
-void printh_format(const char c, va_list *args)
+void printk_format(const char c, va_list *args)
 {
 	switch (c) {
 	case 'd':
@@ -29,19 +29,19 @@ void printh_format(const char c, va_list *args)
 		putc(va_arg(*args, char));
 		break;
 	default:
-		print_str("~~ Error in printh_format ~~");
+		print_str("~~ Error in printk_format ~~");
 		break;
 	}
 }
 
 /**
- * \fn printh(const char *fmt, ...)
+ * \fn printk(const char *fmt, ...)
  *
- * Similar to printf/printk, printh allows formatted output via
+ * Similar to printf/printk, printk allows formatted output via
  * inline escape codes in the given string. Each escape code requires
  * an additional argument to be passed.
  */
-void printh(const char *fmt, ...)
+void printk(const char *fmt, ...)
 {
 	va_list args;
 	int i=0;
@@ -50,7 +50,7 @@ void printh(const char *fmt, ...)
 		switch (fmt[i]) {
 		case '%':
 			i++; // skip the next character
-			printh_format(fmt[i], &args);
+			printk_format(fmt[i], &args);
 			break;
 		default:
 			putc(fmt[i]);

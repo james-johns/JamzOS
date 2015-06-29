@@ -4,7 +4,7 @@
  */
 
 #include <cpu.h>
-#include <printh.h>
+#include <printk.h>
 #include <irq.h>
 #include <vgic.h>
 
@@ -39,7 +39,7 @@ void callIRQHandler(unsigned int irq, struct cpuRegs_s *regs)
 	if (handlers[irq] != NULL) {
 		handlers[irq](regs);
 	} else {
-		printh("Unhandled Interrupt %d\r\n", irq);
+		printk("Unhandled Interrupt %d\r\n", irq);
 		while(1);		
 	}
 }

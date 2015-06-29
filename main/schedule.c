@@ -7,7 +7,7 @@
 #include <cpu.h>
 #include <schedule.h>
 #include <memory.h>
-#include <printh.h>
+#include <printk.h>
 
 void print_regs(struct cpuRegs_s *regs);
 
@@ -18,7 +18,7 @@ void print_regs(struct cpuRegs_s *regs);
  */
 void schedule(struct cpuRegs_s *regs)
 {
-//	printh("Scheduling\r\n");
+//	printk("Scheduling\r\n");
   regs->r0 = regs->r0;
 }
 

@@ -20,12 +20,12 @@
 #ifdef __ASSEMBLY__
 .extern print_str
 .extern print_hex
-.extern printh
+.extern printk
 #else
 
 #include <cpu.h>
 
-void printh(const char *fmt, ...);
+void printk(const char *fmt, ...);
 void print_str(const char *str);
 void print_hex(unsigned int val);
 void putc(char c);
