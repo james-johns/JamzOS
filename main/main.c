@@ -25,7 +25,7 @@ void _kmain()
 {
 	_end = (unsigned int) &_end;
 	malloc(0x10);
-	printh("Starting hyp main\r\n");
+	printh("Starting svc main\r\n");
 
 	init_irqs();
 	init_scheduler();

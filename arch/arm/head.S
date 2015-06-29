@@ -2,7 +2,7 @@
 .arm
 #include <asm/assembler.h>
 #include <printh.h>
-	
+
 .extern _kmain
 /* easy use print macro. requires usable stack,
 	clobers r0 */
@@ -30,7 +30,7 @@ _start:
 check_mode:
 	mrs r0, cpsr
 	and r0, r0, #0x1F
-	cmp r0, #0x1A
+	cmp r0, #0x13
 	bne non_svc
 	PRINT("SVC mode active\r\n")
 
@@ -59,10 +59,8 @@ disableIRQS:
 	
 GLOBAL(install_svc_vectors)
 install_svc_vectors:
-	push {lr}
 	ldr r0, =svc_vectors
-	mcr p15, 4, r0, c12, c0, 0 /* set HVBAR */
-	pop {lr}
+	mcr p15, 0, r0, c12, c0, 0 /* set VBAR */
 	bx lr
 
 .align 5
@@ -154,13 +152,6 @@ enableMMU:
 	isb
 	mov pc, lr
 	
-#define UART_BASE 	0x01c28000
-#define UART_TX		0x00
-#define	UART_IER	0x04
-#define UART_FCR	0x08
-#define UART_LCR	0x0C
-#define UART_MCR	0x10
-
 
 /* init_uart
  * IN:
@@ -188,7 +179,8 @@ putc:
 	strb r0, [r1, #UART_TX]
 	mov pc, lr
 
-.comm boot_stack, 0x1000
+.align 4
+.comm boot_stack, 0x2000
 
 
 	

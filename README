@@ -3,3 +3,5 @@ JamzOS
 
 My Homebrew Operating System project
 
+Test with:
+     qemu-system-arm -machine vexpress-a15 -cpu cortex-a15 -kernel kernel.bin -nographic -serial stdio -S -s

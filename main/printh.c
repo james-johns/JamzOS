@@ -8,12 +8,6 @@
 #include <va_arg.h>
 #include <printh.h>
 
-#define UART_BASE ((unsigned char *)0x01C28000)
-#define UART_TX 0x00
-#define UART_LINE_STATUS 0x14
-
-#define STATUS_Tx_EMPTY (1 << 5)
-
 /**
  * \fn printh_format(const char c, va_list *args)
  * \param[in] c Format code character
@@ -109,6 +103,6 @@ void print_hex(unsigned int value)
 void putc(char c)
 {
 	// wait for Tx to empty before outputting next character
-	while ((UART_BASE[UART_LINE_STATUS] & STATUS_Tx_EMPTY) == 0x00);
-	UART_BASE[UART_TX] = c;
+	while ((((unsigned char *)UART_BASE)[UART_LINE_STATUS] & STATUS_Tx_EMPTY) != 0x00);
+	((unsigned char *)UART_BASE)[UART_TX] = c;
 }

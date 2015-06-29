@@ -1,7 +1,7 @@
 ENTRY(_start)
 SECTIONS
 {
- . = 0x40008000;
+ . = 0x80010000;
 /* .head . : { arch/arm/head.o(.text) } */
  .text : { *(.text*) }
  .rodata : ALIGN(0x1000) { *(.rodata) }
