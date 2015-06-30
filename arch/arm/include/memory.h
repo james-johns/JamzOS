@@ -18,12 +18,14 @@ struct pageTable_s {
 	struct pageDescriptor_s entry[LPAE_ENTRIES];
 } __attribute__ ((packed));
 
-void setTTBR(unsigned int lo, unsigned int hi);
+void setTTBR0(unsigned int lo, unsigned int hi);
+void setTTBR1(unsigned int lo, unsigned int hi);
 void setMAIR0VAL(unsigned int val);
 void setMAIR1VAL(unsigned int val);
 void setVTCR(unsigned int vtcr);
 unsigned int getVTCR();
 void enableMMU();
+void disableMMU();
 void memcpy(void *source, void *dest, unsigned int size);
 void memset(void *dest, unsigned char value, unsigned int size);
 

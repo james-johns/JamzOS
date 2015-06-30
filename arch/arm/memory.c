@@ -43,15 +43,14 @@ void memset(void *dest, unsigned char value, unsigned int size)
  */
 void init_mmu()
 {
+	disableMMU();
 	hypPageTable = createPageTable();
 
 	/* devices */
 	mapVirtToPhys(hypPageTable, 0x0, 0x0, 0x40000000, 0x39C);
 	/* RAM */ 
-	mapVirtToPhys(hypPageTable, 0x40000000, 0x40000000, 
-		0x10010000, 0x3DF);
-	mapVirtToPhys(hypPageTable, 0x50010000, 0x50010000, 
-		0x6FFF0000, 0x3DF);
+	mapVirtToPhys(hypPageTable, 0x80000000, 0x80000000, 
+		0x10000000, 0x3DF);
 	/* System memory */
 	mapVirtToPhys(hypPageTable, 0xC0000000, 0xC0000000, 
 		0x40000000, 0x3DF);
@@ -59,7 +58,8 @@ void init_mmu()
 	unsigned int TTBR_hi, TTBR_lo;
 	TTBR_hi = 0;
 	TTBR_lo = (unsigned int) hypPageTable->entry;
-	setTTBR(TTBR_lo, TTBR_hi);
+	setTTBR0(TTBR_lo, TTBR_hi);
+	setTTBR1(TTBR_lo, TTBR_hi);
 	setMAIR0VAL(0xEEAA4400);
 	setMAIR1VAL(0xFF000004);
 	enableMMU();

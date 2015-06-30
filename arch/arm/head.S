@@ -112,44 +112,61 @@ trap_fiq:
 	RESTORE_REGS
 	eret
 
-GLOBAL(setTTBR)
-setTTBR:
+GLOBAL(setTTBR0)
+setTTBR0:
 	dsb
-	mcrr p15, 6, r0, r1, c2
+	mcrr p15, 0, r0, r1, c2
+	isb
+	mov pc, lr
+GLOBAL(setTTBR1)
+setTTBR1:
+	dsb
+	mcrr p15, 1, r0, r1, c2
 	isb
 	mov pc, lr
 GLOBAL(setVTCR)
 setVTCR:
-	mcr p15, 4, r0, c2, c1, 2
+	mcr p15, 0, r0, c2, c1, 2
 	mov pc, lr
 GLOBAL(getVTCR)
 getVTCR:
-	mrc p15, 4, r0, c2, c1, 2
+	mrc p15, 0, r0, c2, c1, 2
 	mov pc, lr
 	
 GLOBAL(setMAIR0VAL)
 setMAIR0VAL:
 	mcr p15, 0, r0, c10, c2, 0
-	mcr p15, 4, r0, c10, c2, 0
+/*	mcr p15, 4, r0, c10, c2, 0*/
 	mov pc, lr
 GLOBAL(setMAIR1VAL)
 setMAIR1VAL:
 	mcr p15, 0, r0, c10, c2, 1
-	mcr p15, 4, r0, c10, c2, 1
+/*	mcr p15, 4, r0, c10, c2, 1*/
 	mov pc, lr
 GLOBAL(enableMMU)
-enableMMU:	
-	mov r0, #0
-	orr r0, r0, #0x01 /* T0SZ */
-	orr r0, r0, #0x80000000 /* always 1 */
+enableMMU:
+	mov r0, #0 /* T0SZ, T1SZ = 0, so only TTBR0 is used */
+	orr r0, r0, #0x80000000 /* EAE */
 	orr r0, r0, #0x3000 /* SH0 */
 	orr r0, r0, #0xC00 /* ORGN0, IRGN0 */
-	mcr p15, 4, r0, c2, c0, 2
-	mrc p15, 4, r0, c1, c0, 0
+	mcr p15, 0, r0, c2, c0, 2 /* TTBCR */
+	mrc p15, 0, r0, c1, c0, 0
 	orr r0, r0, #0x03 /* MMU and D-Cache enable */
 	dsb
-	mcr p15, 4, r0, c1, c0, 0
+	mcr p15, 0, r0, c1, c0, 0
 	isb
+	mov pc, lr
+GLOBAL(disableMMU)
+disableMMU:
+	push {r0-r1}
+	mov r1, #3
+	mvn r1, r1
+	mrc p15, 0, r0, c1, c0, 0
+	and r0, r0, r1 /* MMU and D-Cache enable */
+	dsb
+	mcr p15, 0, r0, c1, c0, 0
+	isb
+	pop {r0-r1}
 	mov pc, lr
 	
 
