@@ -7,6 +7,7 @@
 
 #include <va_arg.h>
 #include <printk.h>
+#include <uart.h>
 
 /**
  * \fn printk_format(const char c, va_list *args)
@@ -102,7 +103,5 @@ void print_hex(unsigned int value)
  */
 void putc(char c)
 {
-	// wait for Tx to empty before outputting next character
-	while ((((unsigned char *)UART_BASE)[UART_LINE_STATUS] & STATUS_Tx_EMPTY) != 0x00);
-	((unsigned char *)UART_BASE)[UART_TX] = c;
+	defaultUART.write(c);
 }

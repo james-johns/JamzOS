@@ -4,6 +4,8 @@
 #include <printk.h>
 
 .extern _kmain
+.extern init_platform
+	
 /* easy use print macro. requires usable stack,
 	clobers r0 */
 #ifndef PRINT
@@ -20,7 +22,7 @@ GLOBAL(_start)
 _start:
 	cpsid aif
 	ldr sp, =boot_stack
-	bl init_uart
+	bl init_platform
 	mov r0, #'A'
 	bl putc
 	mov r0, #'\r'
@@ -169,14 +171,13 @@ disableMMU:
 	pop {r0-r1}
 	mov pc, lr
 	
-
 /* init_uart
  * IN:
  * OUT:
  * SMASHED: r0, r1, r2
  *
  * Initialise UART0 to 8n1 with interrupts and fifos disabled
- */
+ *
 init_uart:
 	ldr r0, =UART_BASE
 	mov r1, #0x03
@@ -186,16 +187,17 @@ init_uart:
 	strb r2, [r0, #UART_FCR]
 	strb r1, [r0, #UART_MCR]
 	mov pc, lr
+*/	
 /* putc
  * IN: r0 - character to print
  * OUT:
  * SMASHED: r1
- */
+ *
 putc:
 	ldr r1, =UART_BASE
 	strb r0, [r1, #UART_TX]
 	mov pc, lr
-
+*/
 .align 4
 .comm boot_stack, 0x2000
 

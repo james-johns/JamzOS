@@ -1,6 +1,6 @@
 
-
-kernel-obj+= \
+include arch/arm/platform/$(PLATFORM)/Makefile
+obj-y+= \
 arch/arm/head.o \
 arch/arm/traps.o \
 arch/arm/timer.o \
