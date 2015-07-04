@@ -13,7 +13,8 @@ extern unsigned int _end;
  *
  * Note: does not support freeing memory
  */
-void *malloc(unsigned int size) {
+void *malloc(unsigned int size)
+{
 	return (void *)((_end += size)-size);
 }
 
@@ -25,8 +26,18 @@ void *malloc(unsigned int size) {
  *
  * Note: does not support freeing memory or reallocating memory holes
  */
-void *malloc_aligned(unsigned int size, unsigned int alignment) {
+void *malloc_aligned(unsigned int size, unsigned int alignment)
+{
 	_end += (alignment - (_end % alignment));
 	return malloc(size);
 }
 
+/** 
+ * \fn free(void *addr)
+ *
+ * Release memory block at addr to be re-allocated elsewhere.
+ */
+void free(void *addr)
+{
+	addr = addr;
+}

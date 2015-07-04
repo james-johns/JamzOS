@@ -5,6 +5,7 @@
 
 void *malloc(unsigned int size);
 void *malloc_aligned(unsigned int size, unsigned int alignment);
+void free(void *addr);
 
 void test_malloc();
 

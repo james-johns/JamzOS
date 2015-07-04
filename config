@@ -1,0 +1,3 @@
+ARCH=arm
+PLATFORM=vexpress
+UART_16c552=y

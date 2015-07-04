@@ -10,6 +10,9 @@
 
 #define NULL ((void *)0)
 
+struct pageTable_s *getPageTable(struct pageDescriptor_s descriptor);
+
+
 void printPageTable(struct pageTable_s *table, unsigned int baseAddr, unsigned int level)
 {
 	int i = 0;
@@ -48,6 +51,38 @@ struct pageTable_s *createPageTable()
 	}
 
 	return toRet;
+}
+
+/**
+ * \fn getPage(struct pageTable_s *table, unsigned int address)
+ *
+ * Get page descriptor for physical address in given page table
+ */
+struct pageDescriptor_s *getPage(struct pageTable_s *table, unsigned int address)
+{
+	unsigned int index = (address & 0xC0000000) >> 30; // address is 32 bit, first level page table denotes 1GB blocks
+	if (table->entry[index].type == 0x03) { // if entry is valid and is a table
+
+		struct pageTable_s *secondLevel = getPageTable(table->entry[index]);
+		index = (address & 0x3FE00000) >> 21;
+		if (secondLevel->entry[index].type == 0x03) { // second level contains another page table
+
+			struct pageTable_s *thirdLevel = getPageTable(table->entry[index]);
+			index = (address & 0x001FF000) >> 12;
+			if (thirdLevel->entry[index].type == 0x03) { // third level can only contain memory blocks
+
+				return &thirdLevel->entry[index];
+			}
+		} else if (secondLevel->entry[index].type == 0x01) {
+
+			return &table->entry[index];
+		}
+	} else if (table->entry[index].type == 0x01) { // is valid and is a memory block
+
+		return &table->entry[index];
+	}
+	// no valid entry found, return NULL as error
+	return NULL;
 }
 
 /**

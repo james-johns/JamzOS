@@ -1,4 +1,5 @@
 
 
 
-hypervisor-obj+=lib/orderedList.o
+obj-y+=lib/orderedList.o \
+lib/bitset.o

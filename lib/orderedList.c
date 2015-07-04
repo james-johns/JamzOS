@@ -23,6 +23,12 @@ struct orderedList_s *createOrderedList(unsigned int maxSize, orderPredicate_t p
 	return toRet;
 }
 
+void destroyOrderedList(struct orderedList_s *list)
+{
+	free(list->array);
+	free(list);
+}
+
 /**
  * \fn orderedListInsertItem(struct orderedList_s *list, void *item)
  *

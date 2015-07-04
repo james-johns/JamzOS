@@ -7,6 +7,7 @@
 #include <memory.h>
 
 struct pageTable_s *createPageTable();
+struct pageDescriptor_s *getPage(struct pageTable_s *table, unsigned int address);
 
 void printPageTable(struct pageTable_s *table, unsigned int baseAddr, unsigned int level);
 void mapVirtToPhys(struct pageTable_s *table, unsigned int virt, unsigned int phys,
